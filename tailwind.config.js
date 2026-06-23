@@ -13,8 +13,8 @@ export default {
         "blush": "#F5E6E0",
       },
       fontFamily: {
-        "serif": ["Georgia", "serif"],
-        "sans": ["Segoe UI", "sans-serif"],
+        "serif": ["Playfair Display", "serif"],
+        "sans": ["Inter", "sans-serif"],
       },
       animation: {
         "float": "float 6s ease-in-out infinite",

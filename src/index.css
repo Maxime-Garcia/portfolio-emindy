@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap');
 
 * {
   @apply antialiased;
@@ -51,4 +51,96 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-rose;
+}
+
+/* Custom cursor — hidden when CustomCursor component is active */
+@media (pointer: fine) {
+  body.custom-cursor-active {
+    cursor: none;
+  }
+  body.custom-cursor-active * {
+    cursor: none;
+  }
+  body.custom-cursor-active a,
+  body.custom-cursor-active button,
+  body.custom-cursor-active [role="button"] {
+    cursor: none;
+  }
+}
+
+/* Shimmer animation for CTA button */
+@keyframes shimmer {
+  0% { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(200%) skewX(-12deg); }
+}
+
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 248, 243, 0.35),
+    transparent
+  );
+  transform: translateX(-100%) skewX(-12deg);
+}
+
+.btn-shimmer:hover::after {
+  animation: shimmer 0.65s ease-out;
+}
+
+/* will-change hints */
+.will-change-transform {
+  will-change: transform;
+}
+
+/* Floating label input wrapper */
+.float-label-wrap {
+  position: relative;
+}
+
+.float-label-wrap input,
+.float-label-wrap textarea {
+  @apply w-full px-4 pt-6 pb-2 rounded-lg border border-sage/30 bg-cream/60 focus:outline-none focus:border-rose focus:ring-2 focus:ring-rose/20 transition-all text-stone placeholder-transparent;
+}
+
+.float-label-wrap label {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.875rem;
+  color: #8B8680;
+  pointer-events: none;
+  transition: top 0.18s ease, transform 0.18s ease, font-size 0.18s ease, color 0.18s ease;
+}
+
+.float-label-wrap.textarea-wrap label {
+  top: 1.25rem;
+  transform: none;
+}
+
+.float-label-wrap input:focus ~ label,
+.float-label-wrap input:not(:placeholder-shown) ~ label {
+  top: 0.5rem;
+  transform: none;
+  font-size: 0.7rem;
+  color: #D4A5A5;
+}
+
+.float-label-wrap textarea:focus ~ label,
+.float-label-wrap textarea:not(:placeholder-shown) ~ label {
+  top: 0.35rem;
+  font-size: 0.7rem;
+  color: #D4A5A5;
 }

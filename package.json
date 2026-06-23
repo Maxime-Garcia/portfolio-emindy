@@ -20,12 +20,27 @@
     "frontend"
   ],
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "autoprefixer": "^10.5.0",
+    "concurrently": "^8.2.2",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Maxime-Garcia/portfolio-emindy.git"
   },
   "author": "Maxime Garcia",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.3.1",
+    "framer-motion": "^12.41.0",
+    "lucide-react": "^1.21.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  }
 }

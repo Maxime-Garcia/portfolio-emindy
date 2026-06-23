@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [develop, "feature/**", "fix/**"]
+  pull_request:
+    branches: [develop]
+
+jobs:
+  lint-and-type-check:
+    name: Lint & Type Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check — frontend
+        run: npx tsc --noEmit
+
+      - name: Type check — backend
+        run: npm run type-check --workspace=backend
+
+      - name: Lint — backend
+        run: npm run lint --workspace=backend
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: lint-and-type-check
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build — frontend
+        run: npx vite build
+
+      - name: Build — backend
+        run: npm run build --workspace=backend
+
+      - name: Upload frontend build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: dist/
+          retention-days: 7

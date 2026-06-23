@@ -1,4 +1,4 @@
-import Fastify from 'fastify';
+import Fastify, { type FastifyBaseLogger } from 'fastify';
 import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
 import rateLimit from '@fastify/rate-limit';
@@ -9,7 +9,7 @@ import { logger } from './utils/logger.js';
 config();
 
 const fastify = Fastify({
-  logger: logger,
+  logger: logger as unknown as FastifyBaseLogger,
 });
 
 // Register plugins

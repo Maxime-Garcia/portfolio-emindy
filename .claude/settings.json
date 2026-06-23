@@ -23,6 +23,19 @@
             "statusMessage": "Checking changes..."
           }
         ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$raw = [Console]::In.ReadToEnd(); try { $d = $raw | ConvertFrom-Json -ErrorAction Stop; $t = $d.tool_input.subagent_type; if ($t -in @('tech-lead-frontend','tech-lead-backend')) { Write-Output ('[GOVERNANCE] ' + $t + ' a modifie du code. Lance automatiquement une revue de code avec l agent code-reviewer (Agent tool, subagent_type: code-reviewer) sur les modifications recentes. Fais-le directement sans demander confirmation.'); exit 2 } } catch {}",
+            "shell": "powershell",
+            "statusMessage": "Vérification gouvernance...",
+            "asyncRewake": true,
+            "timeout": 15
+          }
+        ]
       }
     ]
   }

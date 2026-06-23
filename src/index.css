@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -10,108 +10,70 @@
 
 body {
   @apply font-sans text-stone;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
   @apply font-serif;
 }
 
-/* Floral decorative elements */
-.flower-accent {
-  @apply relative;
-}
-
-.flower-accent::before {
-  content: '✿';
-  @apply text-rose text-xl;
-}
-
-/* Smooth scroll */
+/* ---- Smooth scroll ---- */
 html {
   scroll-behavior: smooth;
 }
 
-/* Selection style */
+/* ---- Selection ---- */
 ::selection {
-  @apply bg-rose bg-opacity-30 text-stone;
+  @apply bg-rose text-cream;
+  background-color: #D4A5A5;
+  color: #FFF8F3;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  @apply w-2;
-}
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #FFF8F3; }
+::-webkit-scrollbar-thumb { background: #9DBF8F; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #D4A5A5; }
 
-::-webkit-scrollbar-track {
-  @apply bg-cream;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-sage rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-rose;
-}
-
-/* Custom cursor — hidden when CustomCursor component is active */
+/* ---- Custom cursor ---- */
 @media (pointer: fine) {
-  body.custom-cursor-active {
-    cursor: none;
-  }
-  body.custom-cursor-active * {
-    cursor: none;
-  }
+  body.custom-cursor-active { cursor: none; }
+  body.custom-cursor-active * { cursor: none; }
   body.custom-cursor-active a,
   body.custom-cursor-active button,
-  body.custom-cursor-active [role="button"] {
-    cursor: none;
-  }
+  body.custom-cursor-active [role="button"] { cursor: none; }
 }
 
-/* Shimmer animation for CTA button */
+/* ---- Shimmer CTA ---- */
 @keyframes shimmer {
-  0% { transform: translateX(-100%) skewX(-12deg); }
-  100% { transform: translateX(200%) skewX(-12deg); }
+  0%   { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(250%) skewX(-12deg); }
 }
 
 .btn-shimmer {
   position: relative;
   overflow: hidden;
 }
-
 .btn-shimmer::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 40%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 248, 243, 0.35),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255,248,243,0.4), transparent);
   transform: translateX(-100%) skewX(-12deg);
 }
-
 .btn-shimmer:hover::after {
-  animation: shimmer 0.65s ease-out;
+  animation: shimmer 0.7s ease-out;
 }
 
-/* will-change hints */
-.will-change-transform {
-  will-change: transform;
-}
-
-/* Floating label input wrapper */
-.float-label-wrap {
-  position: relative;
-}
+/* ---- Floating label ---- */
+.float-label-wrap { position: relative; }
 
 .float-label-wrap input,
 .float-label-wrap textarea {
-  @apply w-full px-4 pt-6 pb-2 rounded-lg border border-sage/30 bg-cream/60 focus:outline-none focus:border-rose focus:ring-2 focus:ring-rose/20 transition-all text-stone placeholder-transparent;
+  @apply w-full px-4 pt-6 pb-2 rounded-lg border border-sage/30 bg-cream/60;
+  @apply focus:outline-none focus:border-rose focus:ring-2 focus:ring-rose/20;
+  @apply transition-all text-stone placeholder-transparent;
 }
 
 .float-label-wrap label {
@@ -143,4 +105,155 @@ html {
   top: 0.35rem;
   font-size: 0.7rem;
   color: #D4A5A5;
+}
+
+/* ---- Noise texture overlay ---- */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: noise 0.3s steps(1) infinite;
+}
+
+/* ---- Intro loader ---- */
+.intro-clip {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ---- Split text chars ---- */
+.char-wrap {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.char-inner {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ---- Magnetic button ---- */
+.magnetic-wrap {
+  display: inline-block;
+  position: relative;
+}
+
+/* ---- Marquee band ---- */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+/* ---- Gradient mesh background ---- */
+.mesh-gradient {
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(212,165,165,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 80%, rgba(157,191,143,0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 60% 10%, rgba(245,230,224,0.3) 0%, transparent 50%),
+    #FFF8F3;
+}
+
+/* ---- Organic blob shape ---- */
+.blob-shape {
+  animation: morph 8s ease-in-out infinite;
+  will-change: border-radius;
+}
+
+/* ---- 3D Tilt card ---- */
+.tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt-card-inner {
+  transform: translateZ(20px);
+  transform-style: preserve-3d;
+}
+
+/* ---- Glitch effect ---- */
+@keyframes glitch1 {
+  0%, 100% { clip-path: inset(0 0 95% 0); transform: translateX(-3px); }
+  25%       { clip-path: inset(40% 0 50% 0); transform: translateX(3px); }
+  50%       { clip-path: inset(70% 0 20% 0); transform: translateX(-2px); }
+  75%       { clip-path: inset(20% 0 70% 0); transform: translateX(2px); }
+}
+
+@keyframes glitch2 {
+  0%, 100% { clip-path: inset(80% 0 10% 0); transform: translateX(3px); }
+  25%       { clip-path: inset(10% 0 80% 0); transform: translateX(-3px); }
+  50%       { clip-path: inset(50% 0 40% 0); transform: translateX(2px); }
+  75%       { clip-path: inset(30% 0 60% 0); transform: translateX(-2px); }
+}
+
+.glitch-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-wrap::before,
+.glitch-wrap::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.glitch-wrap:hover::before {
+  color: #D4A5A5;
+  animation: glitch1 0.3s steps(1) infinite;
+  will-change: clip-path, transform;
+}
+
+.glitch-wrap:hover::after {
+  color: #9DBF8F;
+  animation: glitch2 0.3s steps(1) infinite;
+  will-change: clip-path, transform;
+}
+
+/* ---- Scroll-driven line reveal ---- */
+.line-reveal {
+  overflow: hidden;
+}
+
+/* ---- Magnetic cursor trail dot ---- */
+.cursor-dot {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+  will-change: transform;
+}
+
+/* ---- Flower intro — petal gentle pulse while visible ---- */
+@keyframes petalPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.03); }
+}
+
+.flower-intro-petal-pulse {
+  animation: petalPulse 3.2s ease-in-out infinite;
+}
+
+/* ---- Prefers reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .noise-overlay { display: none; }
+  .flower-intro-petal-pulse { animation: none; }
 }

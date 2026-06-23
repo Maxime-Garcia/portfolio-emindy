@@ -1,0 +1,29 @@
+{
+  "model": "sonnet",
+  "permissions": {
+    "allow": [
+      "Bash(npm *)",
+      "Bash(git *)",
+      "Bash(node *)",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd $(pwd) && git diff --quiet || echo '📝 Files modified'",
+            "statusMessage": "Checking changes..."
+          }
+        ]
+      }
+    ]
+  }
+}

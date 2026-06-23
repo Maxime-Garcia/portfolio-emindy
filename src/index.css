@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap');
+
+* {
+  @apply antialiased;
+}
+
+body {
+  @apply font-sans text-stone;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif;
+}
+
+/* Floral decorative elements */
+.flower-accent {
+  @apply relative;
+}
+
+.flower-accent::before {
+  content: '✿';
+  @apply text-rose text-xl;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection style */
+::selection {
+  @apply bg-rose bg-opacity-30 text-stone;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-cream;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-sage rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-rose;
+}

@@ -120,11 +120,6 @@ html {
   animation: noise 0.3s steps(1) infinite;
 }
 
-/* ---- Intro loader ---- */
-.intro-clip {
-  clip-path: inset(0 0 0 0);
-}
-
 /* ---- Split text chars ---- */
 .char-wrap {
   overflow: hidden;
@@ -141,13 +136,6 @@ html {
 .magnetic-wrap {
   display: inline-block;
   position: relative;
-}
-
-/* ---- Marquee band ---- */
-.marquee-track {
-  display: flex;
-  width: max-content;
-  will-change: transform;
 }
 
 /* ---- Gradient mesh background ---- */
@@ -174,47 +162,6 @@ html {
 .tilt-card-inner {
   transform: translateZ(20px);
   transform-style: preserve-3d;
-}
-
-/* ---- Glitch effect ---- */
-@keyframes glitch1 {
-  0%, 100% { clip-path: inset(0 0 95% 0); transform: translateX(-3px); }
-  25%       { clip-path: inset(40% 0 50% 0); transform: translateX(3px); }
-  50%       { clip-path: inset(70% 0 20% 0); transform: translateX(-2px); }
-  75%       { clip-path: inset(20% 0 70% 0); transform: translateX(2px); }
-}
-
-@keyframes glitch2 {
-  0%, 100% { clip-path: inset(80% 0 10% 0); transform: translateX(3px); }
-  25%       { clip-path: inset(10% 0 80% 0); transform: translateX(-3px); }
-  50%       { clip-path: inset(50% 0 40% 0); transform: translateX(2px); }
-  75%       { clip-path: inset(30% 0 60% 0); transform: translateX(-2px); }
-}
-
-.glitch-wrap {
-  position: relative;
-  display: inline-block;
-}
-
-.glitch-wrap::before,
-.glitch-wrap::after {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  font: inherit;
-  color: inherit;
-}
-
-.glitch-wrap:hover::before {
-  color: #D4A5A5;
-  animation: glitch1 0.3s steps(1) infinite;
-  will-change: clip-path, transform;
-}
-
-.glitch-wrap:hover::after {
-  color: #9DBF8F;
-  animation: glitch2 0.3s steps(1) infinite;
-  will-change: clip-path, transform;
 }
 
 /* ---- Scroll-driven line reveal ---- */

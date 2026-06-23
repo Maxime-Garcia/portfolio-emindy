@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import {
   motion,
   useMotionValue,
+  useReducedMotion,
   useSpring,
   useScroll,
   useTransform,
@@ -16,13 +17,16 @@ import Footer from './components/Footer'
 import FlowerIntro from './components/FlowerIntro'
 
 // ─── Noise Overlay ───────────────────────────────────────────────────────────
+// animate-noise is needed to make Tailwind emit the @keyframes noise block
+// that index.css's .noise-overlay animation references
 function NoiseOverlay() {
-  return <div className="noise-overlay" aria-hidden="true" />
+  return <div className="noise-overlay animate-noise" aria-hidden="true" />
 }
 
 
 // ─── Custom Cursor ────────────────────────────────────────────────────────────
 function CustomCursor() {
+  const prefersReducedMotion = useReducedMotion()
   const cursorX = useMotionValue(-200)
   const cursorY = useMotionValue(-200)
   const [hovered, setHovered] = useState(false)
@@ -72,7 +76,7 @@ function CustomCursor() {
     }
   }, [cursorX, cursorY, isPointerFine])
 
-  if (!isPointerFine) return null
+  if (!isPointerFine || prefersReducedMotion) return null
 
   return (
     <>

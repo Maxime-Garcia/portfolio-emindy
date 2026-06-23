@@ -13,6 +13,20 @@
     ]
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$raw = [Console]::In.ReadToEnd(); try { $d = $raw | ConvertFrom-Json -ErrorAction Stop; $t = $d.tool_input.subagent_type; if ($t -in @('tech-lead-frontend','tech-lead-backend')) { $cur = (git rev-parse --abbrev-ref HEAD 2>&1).Trim(); if ($cur -eq 'develop') { $p = if ($t -eq 'tech-lead-frontend') {'frontend'} else {'backend'}; $b = 'feature/' + $p + '-' + (Get-Date -Format 'yyyyMMdd-HHmm'); git checkout -b $b 2>&1 | Out-Null; @{ hookSpecificOutput = @{ hookEventName = 'PreToolUse'; additionalContext = '[GOVERNANCE] Branche ' + $b + ' creee automatiquement. Le dev agent travaille sur cette branche. Le code-reviewer commitera, poussera et mergera vers develop apres validation.' } } | ConvertTo-Json -Compress } } } catch {}",
+            "shell": "powershell",
+            "statusMessage": "Création branche feature...",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
@@ -29,7 +43,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$raw = [Console]::In.ReadToEnd(); try { $d = $raw | ConvertFrom-Json -ErrorAction Stop; $t = $d.tool_input.subagent_type; if ($t -in @('tech-lead-frontend','tech-lead-backend')) { Write-Output ('[GOVERNANCE] ' + $t + ' a modifie du code. Lance automatiquement une revue de code avec l agent code-reviewer (Agent tool, subagent_type: code-reviewer) sur les modifications recentes. Fais-le directement sans demander confirmation.'); exit 2 } } catch {}",
+            "command": "$raw = [Console]::In.ReadToEnd(); try { $d = $raw | ConvertFrom-Json -ErrorAction Stop; $t = $d.tool_input.subagent_type; if ($t -in @('tech-lead-frontend','tech-lead-backend')) { $br = (git rev-parse --abbrev-ref HEAD 2>&1).Trim(); $msg = '[GOVERNANCE] ' + $t + ' a termine ses modifications sur la branche ' + $br + '. WORKFLOW OBLIGATOIRE : 1) Lance le code-reviewer (Agent tool, subagent_type: code-reviewer) 2) Si APPROUVE : git add > commit > push ' + $br + ' > merge --no-ff vers develop > push develop 3) Si REJETE : git add > commit [WIP] > push ' + $br + ' > NE PAS merger develop.'; Write-Output $msg; exit 2 } } catch {}",
             "shell": "powershell",
             "statusMessage": "Vérification gouvernance...",
             "asyncRewake": true,
